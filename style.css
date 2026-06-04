@@ -1,0 +1,104 @@
+*{
+    color:black;
+    margin:1%;
+    font-size: 1.125rem;
+
+    text-align:justify-center;
+    font-family:'Courier New', Courier, monospace;
+    
+    border:none;
+    background-color:white;
+}
+
+nav,footer,h1{
+    text-align:center;
+}
+
+h1{
+    font-size:2rem;
+}
+
+a:hover,button:hover,summary:hover{
+    text-decoration:underline;
+    text-decoration-thickness:1px;
+}
+button{
+    font-size:1rem;
+}
+.selected{
+    font-weight:bold;
+}
+.back{
+    position:fixed;
+    top:0;
+    left:0;
+}
+
+progress{
+    border:solid 1px black;
+    width:98%;
+    align-self:center;
+}
+progress::-webkit-progress-bar{
+    background-color:white;
+}
+progress::-webkit-progress-value{
+    background-color:black;
+}
+
+a{
+    text-decoration:none;
+}
+
+footer, footer *{
+    font-size:1rem;
+}
+hr{
+    border:solid 0.5px black;
+}
+.start{
+    text-align:center;
+}
+
+summary{
+    list-style:none;
+}
+
+table{
+    width:98%;
+}
+table, table *{
+    padding:0;
+    margin:0;
+    text-align:center;
+}
+
+td,th{
+    border-left:solid 1px black;
+    border-bottom:solid 1px black;
+    padding:0;
+    margin:0;
+}
+tr{
+    width:100%;
+}
+.nonel{
+    border-left:none;
+}
+.noneb{
+    border-bottom:none;
+}
+
+code{
+    border:solid 1px black;
+    display:block;
+}
+
+input{
+    width:2rem;
+}
+
+table input{
+    width:100%;
+    height:100%;
+}

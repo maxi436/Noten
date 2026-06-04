@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Noten</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <style>
+        .p15 *{
+            width:25%;
+        }
+        .fach{
+            width:25%;
+        }
+    </style>
+    <body>
+        <nav>
+            <button class="navbutton selected" onclick="show('start')">Start</button>
+            <button class="navbutton" onclick="show('eingabe')">Eingabe</button>
+            <button class="navbutton" onclick="show('ziele')">Ziele</button>
+            <button class="navbutton" onclick="show('ds')">Durchschnitt</button>
+        </nav>
+        <hr>
+        
+        <section class="start">
+            <h1>Noten</h1>
+            Auf dieser Webseite kann man seine Noten mit seinen
+            Zielen vergleichen und den Durchschnitt berechnen.
+            Es werden keine Daten gespeichert.
+        </section>
+
+        <section class="eingabe">
+            <h1>Eingabe</h1>
+            <table class="p15">
+                <tbody id="eingaben">
+                    <tr>
+                        <td class="nonel"></td>
+                        <th>Note (1.HJ)</th>
+                        <th>Note (2.HJ)</th>
+                        <th>Ziel (2.HJ)</th>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="lizenz">
+            Copyright (C) 2026 maxi436
+
+                        Permission is granted to use, copy and modify this software
+                                    for personal and educational purposes.
+
+                                                Selling this software, modified versions of it, or including it
+                                                            in comercial products is prohibited without prior permission
+                                                                        from the copyriht holder.
+
+                                                                                    THE SOFTWARE IS PROVIDED "AS IS", WIHTOUT WARRANTY OF ANY KIND.
+        </section>
+
+        <hr>
+        <footer>
+            <button class="navbutton" onclick="show('lizenz')">(C) 2026</button>
+            <a href="https://github.com/maxi436" target="_blank">maxi436</a>
+        </footer>
+        <script src="script.js"></script>
+        <script>
+            ["Deutsch","Englisch","Mathe","Französisch/Latein","Musik","Kunst","Sport","Philosophie","Chemie","Politik","Biologie","Geschichte"].sort().forEach(element => {
+                let string=`<tr><th class="fach nonel ${(element=="Sport" ? "noneb":"")}">${element}</th>`;
+                for (let x=0;x<3;x++){
+                    string+=`<td ${(element=="Sport" ? "class='noneb'":"")}><input type="number" id="${element}${x}"></td>`;
+                }
+                string+="</tr>"
+                document.getElementById("eingaben").innerHTML+=string;
+            });
+        </script>
+    </body>
+</html>
