@@ -7,26 +7,27 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <style>
-        .p15 *{
+        .p15 th,
+        .p15 td {
             width:25%;
         }
         .fach{
-            width:25%;
+            width:50%;
         }
     </style>
     <body>
         <nav>
-            <button class="navbutton selected" onclick="show('start')">Start</button>
-            <button class="navbutton" onclick="show('eingabe')">Eingabe</button>
-            <button class="navbutton" onclick="show('ziele')">Ziele</button>
-            <button class="navbutton" onclick="show('ds')">Durchschnitt</button>
+            <button class="navbutton selected" onclick="show('start',this)">Start</button>
+            <button class="navbutton" onclick="show('eingabe',this)">Eingabe</button>
+            <button class="navbutton" onclick="ziele();show('ziele',this)">Ziele</button>
+            <button class="navbutton" onclick="stat();show('stat',this)">Statistik</button>
         </nav>
         <hr>
         
         <section class="start">
             <h1>Noten</h1>
             Auf dieser Webseite kann man seine Noten mit seinen
-            Zielen vergleichen und den Durchschnitt berechnen.
+            Zielen vergleichen und sich Statistiken ansehen.<br>
             Es werden keine Daten gespeichert.
         </section>
 
@@ -36,7 +37,6 @@
                 <tbody id="eingaben">
                     <tr>
                         <td class="nonel"></td>
-                        <th>Note (1.HJ)</th>
                         <th>Note (2.HJ)</th>
                         <th>Ziel (2.HJ)</th>
                     </tr>
@@ -44,17 +44,30 @@
             </table>
         </section>
 
+        <section class="ziele">
+            <h1>Ziele</h1>
+            <table class="p15">
+                <tbody id="ziele">
+                </tbody>
+            </table>
+        </section>
+
+        <section class="stat">
+            <h1>Statistik</h1>
+            <table class="p15">
+                <tbody id="stat">
+                </tbody>
+            </table>
+        </section>
+
         <section class="lizenz">
-            Copyright (C) 2026 maxi436
-
-                        Permission is granted to use, copy and modify this software
-                                    for personal and educational purposes.
-
-                                                Selling this software, modified versions of it, or including it
-                                                            in comercial products is prohibited without prior permission
-                                                                        from the copyriht holder.
-
-                                                                                    THE SOFTWARE IS PROVIDED "AS IS", WIHTOUT WARRANTY OF ANY KIND.
+            Copyright (C) 2026 maxi436<br>
+            Permission is granted to use, copy and modify this software
+            for personal and educational purposes.<br>
+            Selling this software, modified versions of it, or including it
+            in comercial products is prohibited without prior permission
+            from the copyriht holder.<br>
+            THE SOFTWARE IS PROVIDED "AS IS", WIHTOUT WARRANTY OF ANY KIND.
         </section>
 
         <hr>
@@ -64,14 +77,69 @@
         </footer>
         <script src="script.js"></script>
         <script>
-            ["Deutsch","Englisch","Mathe","Französisch/Latein","Musik","Kunst","Sport","Philosophie","Chemie","Politik","Biologie","Geschichte"].sort().forEach(element => {
-                let string=`<tr><th class="fach nonel ${(element=="Sport" ? "noneb":"")}">${element}</th>`;
-                for (let x=0;x<3;x++){
-                    string+=`<td ${(element=="Sport" ? "class='noneb'":"")}><input type="number" id="${element}${x}"></td>`;
-                }
-                string+="</tr>"
+            const fächer=["Deutsch","Englisch","Mathe","Französisch/Latein","Musik","Kunst","Sport","Philosophie","Chemie","Politik","Biologie","Geschichte"].sort()
+            fächer.forEach(element => {
+                let string=`<tr class="eingabe"><th class="fach nonel ${(element=="Sport" ? "noneb":"")}" width="50%">${element}</th>`;
+                string+=`<td ${(element=="Sport" ? "class='noneb'":"")}><input type="number" id="${element}n"></td>`;
+                                string+=`<td ${(element=="Sport" ? "class='noneb'":"")}><input type="number" value=1 id="${element}z"></td>`;
+                string+="</tr>";
                 document.getElementById("eingaben").innerHTML+=string;
-            });
+            })
+
+            function ziele(){
+                if (check()){
+                    document.getElementById("ziele").innerHTML="Geben sie gültige Werte ein!";
+                }else{
+                    document.getElementById("ziele").innerHTML="<tr><td class='nonel'></td><th>Note</th><th class=nonel></th><th>Ziel</th></tr>";
+                    fächer.forEach(element => {
+                    let string=`<tr ${((parseInt(document.getElementById(`${element}n`).value)-parseInt(document.getElementById(`${element}z`).value))>2 ? "style='font-weight:bold;'":"")} class="eingabe"><th class="fach nonel ${(element=="Sport" ? "noneb":"")}" width="50%">${element}</th>`;
+                    string+=`<td ${(element=="Sport" ? "class='noneb'":"")}>${document.getElementById(`${element}n`).value}</td>`;
+                    string+=`<td class="nonel ${(element=="Sport" ? "noneb":"")}"><progress value=${5-parseInt(document.getElementById(`${element}n`).value)+parseInt(document.getElementById(`${element}z`).value)} max=6></progress></td>`;
+                    string+=`<td ${(element=="Sport" ? "class='noneb'":"")}>${document.getElementById(`${element}z`).value}</td>`;
+                    string+="</tr>";
+                    document.getElementById("ziele").innerHTML+=string;
+                    })
+                }
+            }
+
+            function stat(){
+                if (check()){
+                    document.getElementById("stat").innerHTML="Geben sie gültige Werte ein!";
+                    return true;
+                }else{
+                    let noten=[0,0,0,0,0,0];
+                    fächer.forEach(element => {
+                        const note = parseInt(document.getElementById(`${element}n`).value, 10);
+                        if (!Number.isNaN(note) && note >= 1 && note <= 6) {
+                            noten[note - 1] += 1;
+                        }
+                    })
+                    console.log(noten);
+                    document.getElementById("stat").innerHTML="";
+                    let durchschnitt=0;
+                    let zahlen=0;
+                    for (let x=0;x<=5;x++){
+                        document.getElementById("stat").innerHTML+=`<tr class="eingabe"><th class="nonel">${x+1}</th><td>${noten[x]}</td></tr>`;
+                        durchschnitt+=(x+1)*noten[x];
+                        zahlen+=noten[x];
+                    }
+                    document.getElementById("stat").innerHTML+=`<tr class="eingabe"><th class="nonel noneb">Durschschnitt</th><td class=noneb>${Math.floor(durchschnitt/zahlen*100)/100}</td></tr>`;
+                }
+            }
+
+            function check(){
+                for (const element of fächer) {
+                    const ziel = Number(document.getElementById(`${element}z`).value);
+                    const note = Number(document.getElementById(`${element}n`).value);
+                    if (!Number.isFinite(ziel) || ziel < 1 || ziel > 6) {
+                        return true;
+                    }
+                    if (!Number.isFinite(note) || note < 1 || note > 6) {
+                        return true;
+                    }
+                }
+                return false;
+            }
         </script>
     </body>
 </html>

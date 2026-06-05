@@ -35,8 +35,8 @@ button{
 }
 
 progress{
-    border:solid 1px black;
-    width:98%;
+    border:none;
+    width:100%;
     align-self:center;
 }
 progress::-webkit-progress-bar{
@@ -67,7 +67,7 @@ summary{
 table{
     width:98%;
 }
-table, table *{
+table{
     padding:0;
     margin:0;
     text-align:center;
@@ -78,6 +78,7 @@ td,th{
     border-bottom:solid 1px black;
     padding:0;
     margin:0;
+    font-weight:normal;
 }
 tr{
     width:100%;
@@ -94,11 +95,13 @@ code{
     display:block;
 }
 
-input{
-    width:2rem;
-}
-
 table input{
     width:100%;
     height:100%;
+    border:none;
+    background:transparent;
+}
+
+tr.eingabe:hover *{
+    font-weight:bold;
 }
