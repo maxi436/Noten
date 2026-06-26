@@ -85,12 +85,15 @@
                 }else{
                     document.getElementById("ziele").innerHTML="<tr><td></td><th>Note</th><th></th><th>Ziel</th></tr>";
                     fächer.forEach(element => {
-                    let string=`<tr ${((parseInt(document.getElementById(`${element}n`).value)-parseInt(document.getElementById(`${element}z`).value))>2 ? "style='font-weight:bold;'":"")}><th class="fach">${element}</th>`;
-                    string+=`<td>${document.getElementById(`${element}n`).value}</td>`;
-                    string+=`<td><progress ${(parseInt(document.getElementById(`${element}n`).value)-parseInt(document.getElementById(`${element}z`).value)>2 ? "class=red":(parseInt(document.getElementById(`${element}n`).value)-parseInt(document.getElementById(`${element}z`).value)===0 ? "class=green":""))} value=${5-parseInt(document.getElementById(`${element}n`).value)+parseInt(document.getElementById(`${element}z`).value)} max=5></progress></td>`;
-                    string+=`<td>${document.getElementById(`${element}z`).value}</td>`;
-                    string+="</tr>";
-                    document.getElementById("ziele").innerHTML+=string;
+                        const noteValue = document.getElementById(`${element}n`).value;
+                        if (noteValue !== ""){
+                            let string=`<tr><th class="fach">${element}</th>`;
+                            string+=`<td>${noteValue}</td>`;
+                            string+=`<td><progress ${(parseInt(noteValue)-parseInt(document.getElementById(`${element}z`).value)>2 ? "class=red":(parseInt(noteValue)-parseInt(document.getElementById(`${element}z`).value)<=0 ? "class=green":""))} value=${5-parseInt(noteValue)+parseInt(document.getElementById(`${element}z`).value)} max=5></progress></td>`;
+                            string+=`<td>${document.getElementById(`${element}z`).value}</td>`;
+                            string+="</tr>";
+                            document.getElementById("ziele").innerHTML+=string;
+                        }
                     })
                 }
             }
@@ -102,34 +105,56 @@
                 }else{
                     let noten=[0,0,0,0,0,0];
                     fächer.forEach(element => {
-                        const note = parseInt(document.getElementById(`${element}n`).value, 10);
-                        if (!Number.isNaN(note) && note >= 1 && note <= 6) {
-                            noten[note - 1] += 1;
+                        const noteValue = document.getElementById(`${element}n`).value;
+                        if (noteValue !== ""){
+                            const note = Math.ceil(parseInt(noteValue, 10));
+                            if (!Number.isNaN(note) && note >= 1 && note <= 6) {
+                                noten[note - 1] += 1;
+                            }
                         }
                     })
-                    console.log(noten);
+                    /*console.log(noten);*/
                     document.getElementById("stat").innerHTML="";
                     let durchschnitt=0;
                     let zahlen=0;
                     for (let x=0;x<=5;x++){
                         document.getElementById("stat").innerHTML+=`<tr><th>${x+1}</th><td>${noten[x]}</td></tr>`;
-                        durchschnitt+=(x+1)*noten[x];
                         zahlen+=noten[x];
                     }
-                    document.getElementById("stat").innerHTML+=`<tr><th>Durschschnitt</th><td>${Math.floor(durchschnitt/zahlen*100)/100}</td></tr>`;
+                    let  nan=0;
+                    for (let y=0;y<fächer.length;y++){
+                        const noteVal = document.getElementById(`${fächer[y]}n`).value;
+                        if (noteVal !== ""){
+                            const zahl=parseInt(noteVal);
+                            if (!Number.isNaN(zahl)){
+                                durchschnitt+=zahl;
+                            }else{
+                                nan+=1;
+                            }
+                        }else{
+                            nan+=1;
+                        }
+                    }
+                    document.getElementById("stat").innerHTML+=`<tr><th>Durschschnitt</th><td>${zahlen > 0 ? Math.floor(durchschnitt/zahlen*10)/10 : "-"}</td></tr>`;
                 }
             }
 
             const c=true;
             function check(){
                 for (const element of fächer) {
-                    const ziel = Number(document.getElementById(`${element}z`).value);
-                    const note = Number(document.getElementById(`${element}n`).value);
-                    if (!Number.isFinite(ziel) || ziel < 1 || ziel > 6) {
-                        return c;
+                    const zielValue = document.getElementById(`${element}z`).value;
+                    if (zielValue !== ""){
+                        const ziel = Number(zielValue);
+                        if (ziel < 1 || ziel > 6) {
+                            return c;
+                        }
                     }
-                    if (!Number.isFinite(note) || note < 1 || note > 6) {
-                        return c;
+                    const noteValue = document.getElementById(`${element}n`).value;
+                    if (noteValue !== ""){
+                        const note = Number(noteValue);
+                        if (note < 1 || note > 6) {
+                            return c;
+                        }
                     }
                 }
                 return false;
