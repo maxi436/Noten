@@ -4,18 +4,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Noten</title>
-        <link rel="stylesheet" href="https://maxi436.github.io/modern.css">
+        <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="progress.css">
-        <link rel="stylesheet" href="table.css">
+        <link rel="stylesheet" hre="input.css">
     </head>
     <body>
         <nav>
             <button class="navbutton selected" onclick="show('start',this)">Start</button>
             <button class="navbutton" onclick="show('eingabe',this)">Eingabe</button>
-            <button class="navbutton" onclick="ziele();show('ziele',this)">Ziele</button>
+            <button class="navbutton" onclick="ziele();show('ziele',this)">Vergleich</button>
             <button class="navbutton" onclick="stat();show('stat',this)">Statistik</button>
         </nav>
-        <hr>
         
         <section class="start">
             <h1>Noten</h1>
@@ -29,17 +28,17 @@
             <table class="p15">
                 <tbody id="eingaben">
                     <tr>
-                        <td></td>
-                        <th>Note (2.HJ)</th>
-                        <th>Ziel (2.HJ)</th>
+                        <th></th>
+                        <th>Note</th>
+                        <th>Ziel</th>
                     </tr>
                 </tbody>
             </table>
         </section>
 
         <section class="ziele">
-            <h1>Ziele</h1>
-            <table class="p15">
+            <h1>Vergleich</h1>
+            <table>
                 <tbody id="ziele">
                 </tbody>
             </table>
@@ -63,7 +62,6 @@
             THE SOFTWARE IS PROVIDED "AS IS", WIHTOUT WARRANTY OF ANY KIND.
         </section>
 
-        <hr>
         <footer>
             <button class="navbutton" onclick="show('lizenz')">(C) 2026</button>
             <a href="https://github.com/maxi436" target="_blank">maxi436</a>
@@ -74,7 +72,7 @@
             fächer.forEach(element => {
                 let string=`<tr><th class="fach">${element}</th>`;
                 string+=`<td><input type="number" id="${element}n"></td>`;
-                                string+=`<td><input type="number" value=1 id="${element}z"></td>`;
+                                string+=`<td><input type="text" value=1 id="${element}z"></td>`;
                 string+="</tr>";
                 document.getElementById("eingaben").innerHTML+=string;
             })
@@ -117,8 +115,9 @@
                     document.getElementById("stat").innerHTML="";
                     let durchschnitt=0;
                     let zahlen=0;
+                    document.getElementById("stat").innerHTML+="<tr><th>Note</th><th>Anzahl</th></tr>"
                     for (let x=0;x<=5;x++){
-                        document.getElementById("stat").innerHTML+=`<tr><th>${x+1}</th><td>${noten[x]}</td></tr>`;
+                        document.getElementById("stat").innerHTML+=`<tr><td>${x+1}</rd><td>${noten[x]}</td></tr>`;
                         zahlen+=noten[x];
                     }
                     let  nan=0;

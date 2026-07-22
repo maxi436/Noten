@@ -1,0 +1,155 @@
+:root{
+    --accent:#AAF;
+    font-size:1.1em;
+}
+
+* {
+    font-family: Unbounded, sans-serif;
+    text-decoration: none;
+    margin:1%;
+    padding:0%;
+}
+
+body {
+    margin: 1%;
+    background-color:#0A0A0F;
+}
+nav, nav * {
+    text-align: center;
+    font-size:1em;
+    color:#AAB;
+    background-color:#202025;
+    border:solid 1px #25252A;
+    border-radius:15px;
+}
+nav button {
+    border:none;
+    background:none;
+    position: relative;
+    text-decoration: none;
+}
+nav button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-color:#50508A;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease-out;
+}
+nav button.selected::after {
+  transform: scaleX(1);
+}
+
+footer, footer * {
+    text-align: center;
+    font-size:0.9em;
+    margin-top: 2%;
+    color:#AAB;
+}
+footer button{
+    background:none;
+    border:none;
+}
+section {
+    width: 96%;
+    color:#BBC;
+    background-color:#202025;
+    border:solid 1px #25252A;;
+    border-radius:15px;
+    margin-bottom:2%;
+    padding:1%;
+}
+section a{
+    display:block;
+    text-align:center;
+}
+section a:hover{
+    border-bottom:none;
+}
+section button{
+    color:#AAB;
+    background-color:#505090;
+    border:solid 1px #6060A0;
+    border-radius:15px;
+    font-size:0.9em;
+    padding:0% 1% 0% 1%;
+}
+section button:hover{
+    background-color:#6060A0;
+    border:solid 1px #7070B0;
+}
+.start{
+    text-align:center;
+}
+hr {
+    border: solid 1px var(--accent);
+    border-radius:20px;
+    padding:0;
+}
+h1 {
+    text-align: center;
+    font-size:1.7em;
+    color:#DDE;
+}
+h2 {
+    text-align:center;
+    font-size:1.3rem;
+}
+
+ul{
+    list-style:disc;
+}
+summary{
+    list-style:none;
+    display:inline;
+}
+summary:hover,a:hover{
+    border-bottom:dotted 2px var(--accent);
+}
+details[open] summary{
+    border-bottom:solid 2px var(--accent);
+}
+code{
+    font-family:consolas;
+    display:block;
+    border:solid 2px var(--accent);
+    line-break:auto;
+    padding-right:1%;
+}
+
+table{
+    width:98%;
+    background-color:#303035;
+    border:solid 1px #35353A;
+    border-radius:15px;
+    padding:1%;
+}
+table *{
+    text-align:center;
+}
+tr{
+    width:100%;
+}
+th{
+    font-size:1.2em;
+}
+#ziele td, #ziele th{
+    width:20%;
+}
+#stat td, #stat th{
+    width:50%;
+}
+
+input{
+    width:94%;
+    font-family: Unbounded, sans-serif;
+    text-align:center;
+    color:#BBC;
+    background-color:#404045;
+    border:solid 1px #45454A;
+    border-radius:15px;
+}
